@@ -25,21 +25,20 @@ function barChart(data,stylename,media,xMin,xMax,xAxisHighlight,plotpadding,legA
       });
     margin=margin[0].margin[0];
 
-    var colours= d3.scale.ordinal()
+    var colours= d3.scaleOrdinal()
       .domain(groupNames)
       .range(stylename.fillcolours);
 
     var plotWidth=w-margin.left-margin.right
     var plotHeight=h-margin.top-margin.bottom
-    var drag = d3.behavior.drag().on("drag", moveLegend);
+    var drag = d3.drag().on("drag", moveLegend);
 
-    var yScale = d3.scale.ordinal()
-    .rangeBands([0, plotHeight],.2)
-    .domain(data.map(function(d) { return d.cat;}));
+    var yScale = d3.scaleBand()
+        .range([0, plotHeight],.2)
+        .domain(data.map(function(d) { return d.cat;}));
 
-    var yAxis = d3.svg.axis()
+    var yAxis = d3.axisLeft()
     .scale(yScale)
-    .orient("left")
     .tickSize(0);
 
     var yLabel=plot.append("g")
@@ -59,17 +58,16 @@ function barChart(data,stylename,media,xMin,xMax,xAxisHighlight,plotpadding,legA
     xMin=Math.min(xMin,d3.min(data, function(d) { return +d.value;}))
     xMax=Math.max(xMax,d3.max(data, function(d) { return +d.value;}))
 
-    var xScale = d3.scale.linear()
+    var xScale = d3.scaleLinear()
         .range([yLabelOffset, plotWidth])
         .domain([xMin,xMax]);
 
     //d3.max(data, function(d) { return +d.value;})
 
-    var xAxis = d3.svg.axis()
+    var xAxis = d3.axisBottom()
     .scale(xScale)
     .ticks(numTicksx)
-    .tickSize(plotHeight)
-    .orient("bottom");
+    .tickSize(plotHeight);
 
     var xLabels=plot.append("g")
         .attr("id", media+"xAxis")
@@ -100,7 +98,7 @@ function barChart(data,stylename,media,xMin,xMax,xAxisHighlight,plotpadding,legA
                 .attr("x", function(d) { return xScale(Math.min(0, d.value))-yLabelOffset; })
                 .attr("width", function(d) { return Math.abs(xScale(d.value) - xScale(0)); })
                 .attr("y", function(d) { return yScale(d.cat); })
-                .attr("height", function(d) {  return yScale.rangeBand() })
+                .attr("height", function(d) {  return yScale.step() })
                 .on("mouseover",pointer)
                 .on("click",function(d){
                     var elClass = d3.select(this)

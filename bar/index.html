@@ -10,7 +10,8 @@
         text{font-family:metric}
     </style>
     <script src="http://ft-interactive.github.io/visual-vocabulary/shared/d3.v4.js"></script>
-    <script src="http://ft-interactive.github.io/visual-vocabulary/shared/svg2png.js"></script>
+    <script src="/shared/svg2png.js"></script>
+
     <script src="drawFrame.js"></script>
     <script src="bar.js"></script>
     <script>
@@ -54,7 +55,7 @@
             //date formatter, matching the format of the incoming csv...
             //var parseDate = d3.time.format("%Y %b").parse;
             //var parseDate = d3.time.format("%Y").parse;//just full year
-            var parseDate = d3.time.format("%d-%b-%y").parse;
+            var parseDate = d3.timeFormat("%d-%b-%y").parse;
             /*
             some common formatting parsers....
             d3.time.format("%Y %b") 1986 Jan
