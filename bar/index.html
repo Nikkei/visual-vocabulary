@@ -1,18 +1,20 @@
 <html>
 <head>
-    <title>Frames for FT graphics</title>
+    <title>Bar chart</title>
     <script type="text/javascript" src="styles.js"></script>
-    <link rel="stylesheet" type="text/css" href="./frameGlobalStyles.css">
-
+    <link rel="stylesheet" type="text/css" href="../shared/page-styles.css">
 </head>
 <body>
-    <style>
-        text{font-family:metric}
-    </style>
+    <div class="chart-container" data-mediatype="print"></div>
+    <div class="chart-container" data-mediatype="web"></div>
+    <div class="chart-container" data-mediatype="video"></div>
+    <div class="chart-container" data-mediatype="social"></div>
+
+
+
     <script src="http://ft-interactive.github.io/visual-vocabulary/shared/d3.v4.js"></script>
     <script src="http://ft-interactive.github.io/visual-vocabulary/shared/svg2png.js"></script>
-
-    <script src="drawFrame.js"></script>
+    <script src="../shared/ft-chartframe.js"></script>
     <script src="bar.js"></script>
     <script>
         
@@ -24,6 +26,9 @@
         var subtitle = "Percentage of assets in top-two peer group quartiles";//comment out subtitle assignment if not needed
         var source = "Source: Franklin Resources";
         
+
+
+
         //graph options
         var xMin=0
         var xMax=50
@@ -42,36 +47,17 @@
         ]
         
         //sets the padding inside the chart area
-        var chartpadding=[
-        {name:"print",margin:[{top:15, right:10, bottom:15, left:0}]},
-        {name:"web",margin:[{top:0, right:5, bottom:12, left:10}]},
-        {name:"social",margin:[{top:15, right:12, bottom:60, left:0}]},
-        {name:"video",margin:[{top:55, right:5,bottom:68, left:0}]}
-        ]
 
         drawFrames()
         
         d3.csv(dataURL,function(error, data){
-            //date formatter, matching the format of the incoming csv...
-            //var parseDate = d3.time.format("%Y %b").parse;
-            //var parseDate = d3.time.format("%Y").parse;//just full year
             var parseDate = d3.timeFormat("%d-%b-%y").parse;
-            /*
-            some common formatting parsers....
-            d3.time.format("%Y %b") 1986 Jan
-            d3.time.format("%d-%b-%y")  28-Jan-86
-            d3.time.format("%Y-%m-%d")  1986-01-28
-            d3.time.format("%m/%d/%Y")  01/28/1986
-            d3.time.format("%H:%M") 11:39
-            d3.time.format("%H:%M %p")  11:39 AM
-            d3.time.format("%B %d") January 28
-            d3.time.format("%d %b") 28 Jan
-             */
 
-            //parse the data
-            // data.forEach(function(d) {
-            //     d.date=parseDate(d.date);
-            // });
+            var chartpadding=[
+                {name:"print",margin:[{top:15, right:10, bottom:15, left:0}]},
+                {name:"web",margin:[{top:0, right:5, bottom:12, left:10}]},
+                {name:"social",margin:[{top:15, right:12, bottom:60, left:0}]},
+                {name:"video",margin:[{top:55, right:5,bottom:68, left:0}]}];
 
             for (var i=0;i<frames.length;i++){
                 var stylename=frames[i].stylesheet;
@@ -79,31 +65,37 @@
                 var legend=frames[i].legend;
                 var subYoffset=stylename.subOffset;
                 var yLabel=frames[i].yLabel
-                barChart(data, stylename, media, xMin, xMax, xAxisHighlight, chartpadding,legend, labels, numTicksx);
+                //  barChart(data, stylename, media, xMin, xMax, xAxisHighlight, chartpadding,legend, labels, numTicksx);
             }
         })//end data load
 
         function drawFrames(){
+            function mmToPx(mm){
+                var px = mm * 2.83464480558843;
+                return px;
+            }
+
             for (var i=0;i<frames.length;i++){
                 var stylename=frames[i].stylesheet;
                 var media = frames[i].name;
                 if(frames[i].units=="mm") {
                     framewidth = mmToPx(frames[i].width);
                     frameheight = mmToPx(frames[i].height);
-                }
-                else{
+                } else {
                     framewidth = frames[i].width;
                     frameheight = frames[i].height;
                 }
                 var framemargin = frames[i].margins[0];
                 var titleYoffset=stylename.titleOffset;
                 var subYoffset=stylename.subOffset
-                var frame = new drawFrame(stylename.classes,media,titleYoffset,subYoffset)
+                var frame = new drawFrame()
+                    .styleSheet('/shared/web-style.css')
                     .width(framewidth)
                     .height(frameheight)
                     .margin(framemargin)
                     .title(title)
                     .source(source)
+
                 //optional elements
                 if (subtitle){
                     frame.subtitle(subtitle)
@@ -112,10 +104,7 @@
             }
         }
 
-        function mmToPx(mm){
-            var px = mm*2.83464480558843;
-            return px;
-        }
+
             
     </script>
 </body>
