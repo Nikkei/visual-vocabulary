@@ -1,0 +1,18 @@
+{
+  "Visual Vocabulary": "ビジュアルボキャブラリー",
+  "Designing with data": "データをデザインする",
+  "There are so many ways to visualise data – how do we know which one to pick? Click on the coloured categories below to decide which data relationship is most important in your story, then look at the different types of chart within the category to form some initial ideas about what might work best. This list is not meant to be exhaustive, nor a wizard, but is a useful starting point for making informative and meaningful data visualisations": "データを可視化する方法は非常に沢山ある。どうすれば、どの手段を選ぶべきかわかるのだろうか。最も重要なデータの関係性を決めるのに最上部のカテゴリーを使い、それからカテゴリー内の様々な種類のチャートを見て、最も効果的であろう初期のアイデアを作ると良い。このリストは網羅的ではなく、魔法のようなものでもないが、有益で有意義なデータ可視化の出発点として役立つだろう。",
+  "Inspired by the Graphic Continuum by Jon Schwabish and Severino Ribecca": "",
+  "Deviation": "変動",
+  "Correlation": "相関",
+  "Change v Time": "時系列変化",
+  "Ranking": "ランキング",
+  "Distribution": "分布",
+  "Part to whole": "割合",
+  "Magnitude": "大きさ",
+  "Spatial": "場所",
+  "Flow": "流れ",
+  "Emphasise variations (+/-) from a fixed reference point. Typically the reference point is zero but it can also be a target or a long-term average. Can also be used to show sentiment (positive/neutral/negative)": "固定基準点からの変動(+/-)を強調する。基準点は通常0だが、目標や長期平均にすることもできる。また、感情を表すのにも使われる
+(ポジティブ/どちらでもない/ネガティブ)",
+  "Flow": "流れ",
+}
